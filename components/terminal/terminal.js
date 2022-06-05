@@ -15,8 +15,8 @@ export default function Terminal() {
             <SimpleGrid columns={1} spacing={2}>
                 {Object.keys(GLOBAL_CONSTANTS.COMMAND_LIST).map((item, i) => {
                     return (
-                        <Box>
-                            <h3>{item} ---> {GLOBAL_CONSTANTS.COMMAND_LIST[item]}</h3>
+                        <Box key={i}>
+                            <h3 >{item} ---&gt; {GLOBAL_CONSTANTS.COMMAND_LIST[item]}</h3>
                         </Box>)
                 })}
             </SimpleGrid>
