@@ -36,7 +36,7 @@ export default function Terminal() {
     }
 
     const ListResponse = (inputData) => {
-        return inputData.map((item, i) => { return (<b>{item}{i == inputData.length - 1 ? "." : ","} </b>) })
+        return inputData.map((item, i) => { return (<b key={i}>{item}{i == inputData.length - 1 ? "." : ","} </b>) })
     }
 
     const AboutResponse = () => {
