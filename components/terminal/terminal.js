@@ -46,7 +46,10 @@ export default function Terminal() {
                 setCommandResponse(<HelpResponse />)
                 break;
             case GLOBAL_CONSTANTS.CLEAR_COMMAND:
-                console.log("clear typed")
+                setAllCommandResponse([])
+                setAllCommands([])
+                setCommand("")
+                setCommandResponse("")
                 break;
             default:
                 console.log(GLOBAL_CONSTANTS.COMMAND_NOT_FOUND_MESSAGE)
@@ -55,10 +58,11 @@ export default function Terminal() {
     return (
         <Container>
             {allCommands.map(((item, i) =>
-                <>
-                    <Flex key={i}>{"> "}{item}</Flex>
-                    <Flex key={i}>{allCommandResponse[i]}</Flex>
-                </>
+                item != "" ? (
+                    <>
+                        <Flex key={i}>{"> "}{item}</Flex>
+                        <Flex key={i}>{allCommandResponse[i]}</Flex>
+                    </>) : (null)
             )
             )}
             <Flex>
