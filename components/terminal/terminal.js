@@ -1,6 +1,6 @@
 import { Container, Flex, SimpleGrid, Box } from "@chakra-ui/react"
 import { Input } from '@chakra-ui/react'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import GLOBAL_CONSTANTS from "../../constants/gloablConstants"
 
 export default function Terminal() {
@@ -9,7 +9,12 @@ export default function Terminal() {
     const [allCommands, setAllCommands] = useState([]);
     const [allCommandResponse, setAllCommandResponse] = useState([]);
     const [commandResponse, setCommandResponse] = useState()
-
+    useEffect(() => {
+        setAllCommands(state => [...state, command])
+        setAllCommandResponse(state => [...state, commandResponse])
+        setCommand("")
+        setCommandResponse("")
+    }, [commandResponse])
     const HelpResponse = () => {
         return (
             <SimpleGrid columns={1} spacing={2}>
@@ -26,10 +31,8 @@ export default function Terminal() {
     const handleEnter = (e) => {
         if (e.key === 'Enter') {
             getCommandResponse(command)
-            setAllCommands(state => [...state, command])
-            setAllCommandResponse(state => [...state, commandResponse])
-            console.log(allCommands)
-            setCommand("")
+            // setAllCommands(state => [...state, command])
+            // setAllCommandResponse(state => [...state, commandResponse])
         }
     }
 
