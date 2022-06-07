@@ -1,13 +1,18 @@
-import { Container, Flex, SimpleGrid, Box } from "@chakra-ui/react"
+import { Container, Flex } from "@chakra-ui/react"
 import { Input } from '@chakra-ui/react'
 import { useEffect, useState } from "react"
 import GLOBAL_CONSTANTS from "../../constants/gloablConstants"
+import { HelpResponse, ClearResponse, AboutResponse, ErrorResponse } from "./terminalHelper"
 export default function Terminal() {
     //To set the command input by user
     const [command, setCommand] = useState(null);
+    //To set all the command entered by the user
     const [allCommands, setAllCommands] = useState([]);
+    //To set all the responses entered by user
     const [allCommandResponse, setAllCommandResponse] = useState([]);
+    //To set command response
     const [commandResponse, setCommandResponse] = useState()
+    //For each render, set the states
     useEffect(() => {
         setAllCommands(state => [...state, command])
         setAllCommandResponse(state => [...state, commandResponse])
@@ -15,65 +20,32 @@ export default function Terminal() {
         setCommandResponse("")
     }, [commandResponse])
 
-    const HelpResponse = () => {
-        setCommandResponse(
-            <SimpleGrid columns={1} spacing={2}>
-                {Object.keys(GLOBAL_CONSTANTS.COMMAND_LIST).map((item, i) => {
-                    return (
-                        <Box key={i}>
-                            <h3 >{item} ---&gt; {GLOBAL_CONSTANTS.COMMAND_LIST[item]}</h3>
-                        </Box>)
-                })}
-            </SimpleGrid>
-        )
-    }
-
-    const ClearResponse = () => {
-        setAllCommandResponse([])
-        setAllCommands([])
-        setCommand("")
-        setCommandResponse("")
-    }
-
-    const ListResponse = (inputData) => {
-        return inputData.map((item, i) => { return (<b key={i}>{item}{i == inputData.length - 1 ? "." : ","} </b>) })
-    }
-
-    const AboutResponse = () => {
-        const response =
-            (<SimpleGrid columns={1} spacing={2}>
-                <p>Heya! Ashis this side. I work as developer at Ethereum Push Notification Service (aka EPNS 🔔).</p>
-                <p>I spend most of my time exploring <span>{ListResponse(GLOBAL_CONSTANTS.ABOUT_DABBLE)}</span></p>
-                <p>The tech stack I love working on are <span>{ListResponse(GLOBAL_CONSTANTS.ABOUT_LANGUAGE)}</span></p>
-                <p>In my spare time I love to <span>{ListResponse(GLOBAL_CONSTANTS.ABOUT_HOBBIES)}</span></p>
-            </SimpleGrid>);
-
-        setCommandResponse(response);
-    }
-
+    //On enter, call the getCommandResponse which will set the response 
     const handleEnter = (e) => {
         if (e.key === 'Enter') {
             getCommandResponse(command)
         }
     }
-
+    //To set the command entered by user
     const handleCommandInput = (e) => {
         setCommand(e.currentTarget.value)
     }
 
+    // switch case to get appropriate response as per the input
     const getCommandResponse = (input) => {
         switch (input && input.toLowerCase()) {
             case GLOBAL_CONSTANTS.HELP_COMMAND:
-                HelpResponse()
+                HelpResponse(setCommandResponse)
                 break;
             case GLOBAL_CONSTANTS.CLEAR_COMMAND:
-                ClearResponse()
+                const states = { setCommandResponse, setAllCommands, setCommand, setAllCommandResponse }
+                ClearResponse(states)
                 break;
             case GLOBAL_CONSTANTS.ABOUT_COMMAND:
-                AboutResponse()
+                AboutResponse(setCommandResponse)
                 break;
             default:
-                setCommandResponse(GLOBAL_CONSTANTS.COMMAND_NOT_FOUND_MESSAGE)
+                ErrorResponse(setCommandResponse)
         }
     }
 
