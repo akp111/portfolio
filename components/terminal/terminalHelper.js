@@ -30,8 +30,8 @@ export const ListResponse = (inputData) => {
 }
 
 export const LineByLineResponse = (inputData) => {
-    return inputData.map((item, i) => { return (<div>
-        <a href={item.cta} target="_blank"> <b>Title: {item.name}</b></a>
+    return inputData.map((item, i) => { return (<div key={i}>
+        <a href={item.cta} target="_blank" rel="noreferrer"> <b>Title: {item.name}</b></a>
         <p>{item.description}</p>
         <p>-----------------------------------------------</p>
     </div>) })
@@ -48,7 +48,7 @@ export const AboutResponse = (setCommandResponse) => {
             <div>
                 {LineByLineResponse(GLOBAL_CONSTANTS.PROJECTS)}
             </div>
-            <div><a href={GLOBAL_CONSTANTS.RESUME_LINK} target="_blank">Link to my resume</a></div>
+            <div><a href={GLOBAL_CONSTANTS.RESUME_LINK} target="_blank" rel="noreferrer">Link to my resume</a></div>
         </SimpleGrid>);
 
     setCommandResponse(response);
