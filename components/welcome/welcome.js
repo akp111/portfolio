@@ -10,7 +10,7 @@ export default function Welcome() {
                 {WELCOME_CONSTANTS.WELCOME_MESSAGE}
             </Flex>
             <Flex>
-                Type help to list the commands and have fun! (Note: WIP)
+                Type "about" to get details about me or "help" to list the commands and have fun! (Note: WIP)
             </Flex>
         </Container>
 
